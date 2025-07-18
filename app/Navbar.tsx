@@ -7,7 +7,7 @@ import { IoIosBug } from "react-icons/io";
 const Navbar = () => {
   const links = [
     { label: "Dashboard", href: "/" },
-    { label: "issue", href: "/Issue" },
+    { label: "Issue", href: "/issue" },
   ];
   return (
     <nav className="flex space-x-6 border-b h-14 px-5 items-center mb-5 border-t my-1">
