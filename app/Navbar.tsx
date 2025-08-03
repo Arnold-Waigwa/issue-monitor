@@ -22,17 +22,18 @@ const Navbar = () => {
       </Link>
       <ul className="flex space-x-6">
         {links.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={classnames({
-              "text-zinc-900": link.href === active_link,
-              "text-zinc-500": link.href != active_link,
-              "hover:text-zinc-800 transition-colors": true,
-            })}
-          >
-            {link.label}
-          </Link>
+          <li key={link.href}>
+            <Link
+              href={link.href}
+              className={classnames({
+                "text-zinc-900": link.href === active_link,
+                "text-zinc-500": link.href != active_link,
+                "hover:text-zinc-800 transition-colors": true,
+              })}
+            >
+              {link.label}
+            </Link>
+          </li>
         ))}
       </ul>
     </nav>
