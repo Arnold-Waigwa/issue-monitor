@@ -4,6 +4,8 @@ import React from "react";
 import delay from "delay";
 import { Card, Flex, Heading, Text } from "@radix-ui/themes";
 import IssueStatusBadge from "@/app/components/IssueStatusBadge";
+import ReactMarkdown from "react-markdown";
+
 //calling the issues with Id
 interface Props {
   params: { id: string };
@@ -22,8 +24,8 @@ const page = async ({ params }: Props) => {
         <IssueStatusBadge status={issues.status} />
         <Text>{issues?.createdAt.toDateString()}</Text>
       </Flex>
-      <Card>
-        <p>{issues?.description}</p>
+      <Card className="prose mt-3">
+        <ReactMarkdown>{issues?.description}</ReactMarkdown>
       </Card>
     </div>
   );
