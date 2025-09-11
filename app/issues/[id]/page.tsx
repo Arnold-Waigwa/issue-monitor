@@ -1,7 +1,6 @@
 import prisma from "@/prisma/client";
 import { notFound } from "next/navigation";
 import React from "react";
-import delay from "delay";
 import { Card, Flex, Heading, Text } from "@radix-ui/themes";
 import IssueStatusBadge from "@/app/components/IssueStatusBadge";
 import ReactMarkdown from "react-markdown";
@@ -16,7 +15,7 @@ const page = async ({ params }: Props) => {
     where: { id: parseInt(params.id) },
   });
   if (!issues) notFound();
-  await delay(2000);
+
   return (
     <div>
       <Heading>{issues?.title}</Heading>
