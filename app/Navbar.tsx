@@ -1,9 +1,10 @@
 "use client";
-import Link from "next/link";
-import React from "react";
-import { IoIosBug } from "react-icons/io";
-import { usePathname } from "next/navigation";
+import { Box } from "@radix-ui/themes";
 import classnames from "classnames";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { IoIosBug } from "react-icons/io";
 
 //hover transitions for links
 //implement active link
@@ -14,6 +15,7 @@ const Navbar = () => {
     { label: "Issue", href: "/issues/list" },
   ];
   const active_link = usePathname();
+  const { status, data: session } = useSession();
 
   return (
     <nav className="flex space-x-6 border-b h-14 px-5 items-center mb-5 border-t my-1">
@@ -36,6 +38,14 @@ const Navbar = () => {
           </li>
         ))}
       </ul>
+      <Box>
+        {status === "authenticated" && (
+          <Link href="/api/auth/signout">Log Out</Link>
+        )}
+        {status === "unauthenticated" && (
+          <Link href="/api/auth/signin">Log In</Link>
+        )}
+      </Box>
     </nav>
   );
 };
