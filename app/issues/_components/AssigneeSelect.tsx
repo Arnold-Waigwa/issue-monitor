@@ -18,6 +18,13 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
     retry: 3,
   });
 
+  const assignIssue = (userId: string) =>
+    axios
+      .patch("/api/issues/" + issue.id, {
+        assignedUserId: userId,
+      })
+      .catch(() => toast.error("Changes could not be saved!"));
+
   if (isLoading) return <Skeleton />;
 
   if (error) return null;
@@ -26,13 +33,7 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
     <>
       <Select.Root
         defaultValue={issue.assignedUserId || ""}
-        onValueChange={(userId) =>
-          axios
-            .patch("/api/issues/" + issue.id, {
-              assignedUserId: userId,
-            })
-            .catch(() => toast.error("Changes could not be saved!"))
-        }
+        onValueChange={assignIssue}
       >
         <Select.Trigger placeholder="Assign" />
         <Select.Content>
