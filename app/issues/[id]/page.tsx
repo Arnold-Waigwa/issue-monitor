@@ -9,12 +9,12 @@ import authOptions from "@/app/auth/AuthOptions";
 import AssigneeSelect from "../_components/AssigneeSelect";
 
 interface Props {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }
 
 const page = async ({ params }: Props) => {
   const session = await getServerSession(authOptions);
-  const { id } = await params;
+  const id = params.id;
   const issues = await prisma.issue.findUnique({
     where: { id: parseInt(id) },
   });
