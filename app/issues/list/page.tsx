@@ -7,6 +7,7 @@ import { Issue, Status } from "@prisma/client";
 import { ArrowUpIcon } from "@radix-ui/react-icons";
 import Pagination from "@/app/components/Pagination";
 import IssueTable, { columnValues, issueQuery } from "./IssueTable";
+import { Metadata } from "next";
 
 interface Props {
   searchParams: issueQuery;
@@ -44,3 +45,8 @@ const IssuesPage = async ({ searchParams }: Props) => {
 
 export const dynamic = "force-dynamic";
 export default IssuesPage;
+
+export const metadata: Metadata = {
+  title: "Issue Tracker",
+  description: "Description of issue Tracker",
+};
