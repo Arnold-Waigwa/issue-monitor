@@ -8,6 +8,7 @@ import { ArrowUpIcon } from "@radix-ui/react-icons";
 import Pagination from "@/app/components/Pagination";
 import IssueTable, { columnValues, issueQuery } from "./IssueTable";
 import { Metadata } from "next";
+import PageNumberSelection from "./PageNumberSelection";
 
 interface Props {
   searchParams: issueQuery;
@@ -15,7 +16,7 @@ interface Props {
 
 const IssuesPage = async ({ searchParams }: Props) => {
   const page = parseInt(searchParams.page) || 1;
-  const pageSize = 10;
+  const pageSize = parseInt(searchParams.pageSize) || 10;
 
   const sortOrder = searchParams.sortOrder === "desc" ? "desc" : "asc";
 
@@ -40,7 +41,10 @@ const IssuesPage = async ({ searchParams }: Props) => {
     <Flex direction="column" gap="3">
       <IssueActions />
       <IssueTable searchParams={searchParams} issues={issues} />
-      <Pagination pageSize={pageSize} itemCount={count} currentPage={page} />
+      <Flex justify="between">
+        <Pagination pageSize={pageSize} itemCount={count} currentPage={page} />
+        <PageNumberSelection />
+      </Flex>
     </Flex>
   );
 };
