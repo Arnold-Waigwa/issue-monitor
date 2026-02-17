@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   //const session = await getServerSession(authOptions);
   //if (!session) return NextResponse.json({}, { status: 401 });
@@ -18,7 +18,7 @@ export async function PATCH(
     return NextResponse.json(validation.error.format(), { status: 400 });
   }
 
-  const { assignedUserId, title, description } = body;
+  const { assignedUserId, title, description, status } = validation.data;
 
   if (assignedUserId) {
     const user = await prisma.user.findUnique({
@@ -39,10 +39,9 @@ export async function PATCH(
   }
   const updatedIssue = await prisma.issue.update({
     where: { id: issue.id },
-    data: {
-      title,
-      description,
-      assignedUserId,
+    data: validation.data,
+    include: {
+      assignedUser: true,
     },
   });
   return NextResponse.json(updatedIssue, { status: 200 });
@@ -50,7 +49,7 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   const session = await getServerSession(authOptions);
   if (!session) return NextResponse.json({}, { status: 401 });
