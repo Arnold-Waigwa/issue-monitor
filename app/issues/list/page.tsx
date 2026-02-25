@@ -17,6 +17,7 @@ interface Props {
 const IssuesPage = async ({ searchParams }: Props) => {
   const page = parseInt(searchParams.page) || 1;
   const pageSize = parseInt(searchParams.pageSize) || 10;
+  const assignee = searchParams.assignee;
 
   const sortOrder = searchParams.sortOrder === "desc" ? "desc" : "asc";
 
@@ -27,6 +28,7 @@ const IssuesPage = async ({ searchParams }: Props) => {
   const issues = await prisma.issue.findMany({
     where: {
       status: searchParams.status,
+      ...(searchParams.assignee && { assignedUserId: assignee }),
     },
     orderBy,
     skip: (page - 1) * pageSize,
