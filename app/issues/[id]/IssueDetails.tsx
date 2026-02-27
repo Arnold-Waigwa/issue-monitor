@@ -14,6 +14,11 @@ const IssueDetails = ({ issue }: { issue: Issue }) => {
       <Card className="prose max-w-full" mt="4">
         <ReactMarkdown>{issue.description}</ReactMarkdown>
       </Card>
+      <Card className="mt-3">
+        <ReactMarkdown className="font-bold">comments</ReactMarkdown>
+        <ReactMarkdown> Comment 1</ReactMarkdown>
+        <ReactMarkdown> Comment 2</ReactMarkdown>
+      </Card>
     </div>
   );
 };
