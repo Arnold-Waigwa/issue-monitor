@@ -4,6 +4,7 @@ import { Card, Flex, Heading, Text } from "@radix-ui/themes";
 import ReactMarkdown from "react-markdown";
 
 const IssueDetails = ({ issue }: { issue: Issue }) => {
+  const comments = ["comment1", "comment2", "comment3"];
   return (
     <div>
       <Heading>{issue.title}</Heading>
@@ -16,8 +17,9 @@ const IssueDetails = ({ issue }: { issue: Issue }) => {
       </Card>
       <Card className="mt-3">
         <ReactMarkdown className="font-bold">comments</ReactMarkdown>
-        <ReactMarkdown> Comment 1</ReactMarkdown>
-        <ReactMarkdown> Comment 2</ReactMarkdown>
+        {comments.map((comment) => (
+          <ReactMarkdown key={comment}>{comment}</ReactMarkdown>
+        ))}
       </Card>
     </div>
   );
