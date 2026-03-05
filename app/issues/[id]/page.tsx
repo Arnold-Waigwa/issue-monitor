@@ -29,7 +29,7 @@ const page = async ({ params }: Props) => {
     <Grid columns={{ initial: "1", sm: "5" }}>
       <Box className="md:col-span-4 mr-2">
         <IssueDetails issue={issues} />
-        <AddCommentButton />
+        <AddCommentButton issueId={issues.id} />
       </Box>
       {session && (
         <Box>

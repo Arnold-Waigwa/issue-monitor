@@ -13,7 +13,7 @@ const AddCommentButton = ({ issueId }: { issueId: number }) => {
 
   const handleSubmit = async () => {
     try {
-      await axios.post("/api/issues/" + issueId, { comments: comment });
+      await axios.post("/api/comments/" + issueId, { text: comment });
       setComment("");
       setIsClicked(false);
     } catch (error) {

@@ -1,10 +1,22 @@
 import { IssueStatusBadge } from "@/app/components";
+import prisma from "@/prisma/client";
 import { Issue } from "@prisma/client";
 import { Card, Flex, Heading, Text } from "@radix-ui/themes";
 import ReactMarkdown from "react-markdown";
 
-const IssueDetails = ({ issue }: { issue: Issue }) => {
-  const comments = ["comment1", "comment2", "comment3"];
+const IssueDetails = async ({ issue }: { issue: Issue }) => {
+  const comments = await prisma.comments.findMany({
+    where: {
+      issueId: issue.id,
+    },
+    include: {
+      user: true, // include user info (name, image, etc.)
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
   return (
     <div>
       <Heading>{issue.title}</Heading>
@@ -16,10 +28,26 @@ const IssueDetails = ({ issue }: { issue: Issue }) => {
         <ReactMarkdown>{issue.description}</ReactMarkdown>
       </Card>
       <Card className="mt-3">
-        <ReactMarkdown className="font-bold">comments</ReactMarkdown>
-        {comments.map((comment) => (
-          <ReactMarkdown key={comment}>{comment}</ReactMarkdown>
-        ))}
+        <Heading size="3" mb="2">
+          Comments
+        </Heading>
+        {comments.length === 0 ? (
+          <Text color="gray">No comments yet.</Text>
+        ) : (
+          comments.map((comment) => (
+            <Card key={comment.id} my="2">
+              <Flex justify="between" mb="1">
+                <Text size="2" weight="bold">
+                  {comment.user?.name ?? comment.user?.email ?? "Unknown"}
+                </Text>
+                <Text size="1" color="gray">
+                  {comment.createdAt.toDateString()}
+                </Text>
+              </Flex>
+              {comment.text}
+            </Card>
+          ))
+        )}
       </Card>
     </div>
   );
